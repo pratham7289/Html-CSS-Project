@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Clone the repository containing the Dockerfile and project files
-                git 'https://github.com/pratham7289/Html-CSS-Project.git'
+                git url: "https://github.com/pratham7289/Html-CSS-Project.git",branch: "main"
             }
         }
         stage('Build Docker Image') {
