@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image and tag it as 'latest'
-                    sh 'docker build -t pratham7289/image1:latest .'
+                    sh 'docker build -t pratham7289/python-app:latest .'
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
                 script {
                     // Login and push the Docker image with the 'latest' tag to Docker Hub
                     docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials-id') {
-                        sh 'docker push your-dockerhub-username/image1:latest'
+                        sh 'docker push pratham7289/python-app:latest'
                     }
                 }
             }
