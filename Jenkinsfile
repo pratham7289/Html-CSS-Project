@@ -1,29 +1,26 @@
 pipeline {
     agent any
-    environment {
-        DOCKER_IMAGE = "your-dockerhub-username/static-html-site:latest"  // Replace with your Docker Hub username and image name
-        DOCKER_CREDENTIALS = 'docker-hub-credentials-id'                 // Replace with the ID of your Docker Hub credentials in Jenkins
-    }
     stages {
         stage('Checkout Code') {
             steps {
                 // Clone the repository containing the Dockerfile and project files
-                git 'https://github.com/your-repo/your-html-css-project.git'
+                git 'https://github.com/pratham7289/Html-CSS-Project.git'
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $DOCKER_IMAGE .'
+                    // Build the Docker image and tag it as 'latest'
+                    sh 'docker build -t pratham7289/image1:latest .'
                 }
             }
         }
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Login and push the Docker image to Docker Hub
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS) {
-                        sh 'docker push $DOCKER_IMAGE'
+                    // Login and push the Docker image with the 'latest' tag to Docker Hub
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials-id') {
+                        sh 'docker push your-dockerhub-username/image1:latest'
                     }
                 }
             }
