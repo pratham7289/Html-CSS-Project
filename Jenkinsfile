@@ -3,14 +3,12 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                // Clone the repository containing the Dockerfile and project files
-                git url: "https://github.com/pratham7289/Html-CSS-Project.git",branch: "main"
+                git url: "https://github.com/pratham7289/Html-CSS-Project.git", branch: "main"
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image and tag it as 'latest'
                     sh 'docker build -t pratham7289/python-app:latest .'
                 }
             }
@@ -18,8 +16,9 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Login and push the Docker image with the 'latest' tag to Docker Hub
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials-id') {
+                    // Push the Docker image to Docker Hub
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                         sh 'docker push pratham7289/python-app:latest'
                     }
                 }
